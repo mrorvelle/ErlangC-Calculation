@@ -9,6 +9,7 @@ def erlang_func(
     queue_nm
 ):
     
+    
     calls_per_hour = num_calls / hours
     call_minutes = (AHT_secs / 60) * num_calls
     call_hours = int(call_minutes / 60)

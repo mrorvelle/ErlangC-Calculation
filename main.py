@@ -1,3 +1,15 @@
+import pandas as pd
+#CSV must contain following headers (QueueName as obj, Calls as int, Hours as int, AHT as int, SL as float64, AnsTime as int, MaxOcc as float64, Shrinkage as float 64, FTE as float64)
+
+#result will write to FTE_Results.csv file
+
+#Read in input
+f = pd.read_csv("erlangtest.csv")
+
+#verify types
+print(df.dtypes)
+
+#ErlangC Calc
 def erlang_func(
     num_calls,
     hours,
@@ -75,18 +87,16 @@ def erlang_func(
         if SL_calc > SL:
           ASA = round((prob * AHT_secs) / (N - call_hours), 2)
           N = int(N / (1 - (shrinkage / 100)))
-          print(str(queue_nm) + " Projected Service Level: " + "{:.0%}".format(SL_calc) +
-              " Using " + str(N) + " Agents, w/ ASA of " + str(ASA) + " seconds.")
-          print("Calls answered immediately: " + "{:.0%}".format(prob))
+          return N
+          #N is the FTE required
 
 
-#erlang_func(50,12,420,0.8,30,.25,.85,'PRJ100114 Duke Inound My Home Energy Report')
-#erlang_func(20,12,420,0.8,30,.25,.85,'Combined Gates Under 10 Daily')
-#erlang_func(1,13,420,0.8,30,.25,.85,'PRJ100798 FPLES Commercial Surge Sheild Inbound')
-erlang_func(100,.5,180,0.8,20,.30,.85,'PRJ100799 FPLES Residential Surge Shield Inbound')
-#erlang_func(8,13,540,0.8,30,.25,.85,'PRJ101335 Georgia Power Inbound Services')
-#erlang_func(4,8,480,0.8,30,.25,.85,'PRJ101337 Nipsco APS Enrollment Services')
-#erlang_func(5,13,420,0.8,30,.25,.85,'PRJ101338 Gulf Power Inbound Services')
-#erlang_func(1,9,300,0.8,30,.25,.85,'PRJ102138 EnergyHub Potomac EV Programs')
+#update FTE column with FTE required
+for i in df:
+  df['FTE'] = df.apply(lambda x: erlang_func(x.Calls, x.Hours, x.AHT, x.SL, x.AnsTime, x.MaxOcc, x.Shrinkage, x.QueueName), axis=1)
 
+#print results
+print(df)
+#save results
+df.to_csv('FTE_Results.csv')
 

@@ -1,0 +1,4 @@
+QueueName,Calls,Hours,AHT,SL,AnsTime,MaxOcc,Shrinkage,FTE
+PRJ100114 Duke Inound My Home Energy Report,500,1,180,0.8,30,0.85,0.25,
+PRJ100799 FPLES Residential Surge Shield Inbound,150,1,420,0.8,30,0.85,0.25,
+PRJ101338 Gulf Power Inbound Services,75,1,500,0.8,20,0.85,0.25,

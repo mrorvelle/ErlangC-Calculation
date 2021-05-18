@@ -4,7 +4,7 @@ import pandas as pd
 #result will write to FTE_Results.csv file
 
 #Read in input
-f = pd.read_csv("erlangtest.csv")
+df = pd.read_csv("erlangtest.csv")
 
 #verify types
 print(df.dtypes)
@@ -24,25 +24,21 @@ def erlang_func(
     #explanation of calc at # https://www.callcentrehelper.com/erlang-c-formula-example-121281.htm
 
     calls_per_hour = num_calls / hours
-    #print('Calls per hour')
-    #print(calls_per_hour)
+  
     call_minutes = (AHT_secs / 60) * calls_per_hour
-    #print('Call minutes')
-    #print(call_minutes)
+    
     call_hours = int(call_minutes / 60)
     
     # raw # of agents required = N
     N = int(call_hours) + 1
-    #print(N)
+    
     
     factorial = 1
     for i in range(1, N + 1):
         factorial = factorial * i
     powers = call_hours**N
     X_Num = powers / factorial * (N / (N - call_hours))
-    #print(factorial)
-    #print(powers)
-    #print(X_Num)
+    
 
 
     
@@ -54,10 +50,10 @@ def erlang_func(
         else:
             denom += (call_hours**i) / (math.factorial(i))
 
-    #print(denom)
+   
     
     prob = X_Num / (denom + X_Num)
-    #print(prob)
+    
     
     
     exponent = 2.71828**-((N - call_hours) * (ans_time_secs / AHT_secs))
